@@ -52,7 +52,14 @@ export const constantRoutes = [
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
       meta: { title: 'Dashboard', icon: 'dashboard' }
-    }]
+    },
+    {
+      path: 'datamanage',
+      name: 'Datamanage',
+      component: () => import('@/views/datamanage/index'),
+      meta: { title: 'Datamanage', icon: 'datamanage' }
+    }
+  ]
   },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

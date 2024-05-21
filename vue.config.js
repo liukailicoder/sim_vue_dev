@@ -42,10 +42,10 @@ module.exports = {
         target: 'http://81.70.40.111:9999/',
         changOrigin: true,  //允许跨域
         pathRewrite: {
-          '^/dev-api': '' 
+          '^/dev-api': ''
         }
       },
-      
+
     }
   },
   configureWebpack: {
