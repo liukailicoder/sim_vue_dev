@@ -1,0 +1,83 @@
+/*文本格式化，超出范围，显示省略号*/
+@mixin textOverflow($width: 100%, $display: block) {
+  width: $width;
+  display: $display;
+  white-space: nowrap;
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+@mixin wh($width: 100%, $height: 100%) {
+  width: $width;
+  height: $height;
+}
+
+/*弹性盒子（传入null不设置该属性）*/
+@mixin flexBox($direction: row, $justify: null, $align: null, $flex-wrap: null) {
+  display: flex;
+
+  @if ($direction !=null) {
+    flex-direction: $direction;
+  }
+
+  @if ($justify !=null) {
+    justify-content: $justify;
+  }
+
+  @if ($align !=null) {
+    align-items: $align;
+  }
+
+  @if ($flex-wrap !=null) {
+    flex-wrap: $flex-wrap;
+  }
+}
+
+/*绝对定位 参数顺序：上右下左*/
+@mixin positionAbsolute($top: null, $right: null, $bottom: null, $left: null) {
+  position: absolute;
+
+  @if ($left !="" & & $left !=null) {
+    left: $left;
+  }
+
+  @if ($right !="" & & $right !=null) {
+    right: $right;
+  }
+
+  @if ($top !="" & & $top !=null) {
+    top: $top;
+  }
+
+  @if ($bottom !="" & & $bottom !=null) {
+    bottom: $bottom;
+  }
+}
+
+/*渐变(从上到下）*/
+@mixin linear-gradient($direction: bottom, $color1: transparent, $color2: #306eff, $color3: transparent) {
+  //background: -webkit-linear-gradient($direction,$colorTop, $colorCenter, $colorBottom); /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient($direction, $color1, $color2, $color3);
+  /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient($direction, $color1, $color2, $color3);
+  /* Firefox 3.6 - 15 */
+  background: linear-gradient(to $direction, $color1, $color2, $color3);
+  /* 标准的语法 */
+}
+
+/* 文本阴影 */
+@mixin text-show($h-shadow: 0px, $v-shadow: 0px, $blur: 10px, $color: rgba(0, 180, 255, 0.7)) {
+  text-shadow: $h-shadow $v-shadow $blur $color;
+}
+
+/* 定义滚动条样式 圆角和阴影不需要则传入null */
+@mixin scrollBar($width: 10px, $height: 10px, $outColor: $bgColor, $innerColor: $bgGrey, $radius: 5px, $shadow: null) {
+
+  /*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+  &::-webkit-scrollbar {
+    width: $width;
+    height: $height;
+    background-color: $outColor;
+  }
+}
