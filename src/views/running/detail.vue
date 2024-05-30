@@ -44,7 +44,7 @@
             </div>
           </div>
         </div>
-        <!-- 图表 -->
+        <!-- 图表数据 -->
         <div class="chart" v-show="nowIndex == 0">
           <DetailInfoLine :trendData="Trend_Chart" />
         </div>
