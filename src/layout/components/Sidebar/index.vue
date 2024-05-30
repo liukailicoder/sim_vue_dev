@@ -12,7 +12,7 @@
         :collapse-transition="false"
         mode="vertical"
       >
-        <sidebar-item v-for="route in routes" :key="route.path" :item="route" :base-path="route.path" />
+        <sidebar-item v-for="route in routeList" :key="getKey(route)" :item="route" :base-path="route.path" />
       </el-menu>
     </el-scrollbar>
   </div>
@@ -29,9 +29,10 @@ export default {
   computed: {
     ...mapGetters([
       'sidebar',
+      'routes'
     ]),
-    routes() {
-      return this.$router.options.routes
+    routeList() {
+      return [...this.$router.options.routes, ...this.routes]
     },
     activeMenu() {
       const route = this.$route
@@ -52,6 +53,14 @@ export default {
       return !this.sidebar.opened
     }
   },
+  methods: {
+    getKey(route) {
+      let meta = route.meta||{};
+      let append = meta.query_string || '';
+      let key = route.path + append;
+      return key;
+    }
+  }
   
 }
 </script>

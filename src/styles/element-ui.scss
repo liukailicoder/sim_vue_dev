@@ -5,6 +5,54 @@
   font-weight: 400 !important;
 }
 
+.el-drawer {
+  background: $bgColor;
+
+  .el-drawer__body {
+    padding: 20px;
+  }
+
+  .el-drawer__header {
+    padding-bottom: 20px;
+    margin-bottom: 0;
+    background-color: $highColor;
+    color: white;
+  }
+}
+
+.el-tree {
+  background-color: $bgColor;
+  color: white;
+
+  .el-tree-node__content:hover {
+    background-color: $highColor;
+  }
+
+  .el-tree-node:focus>.el-tree-node__content {
+    background-color: $highColor;
+  }
+}
+
+.el-tabs {
+  .el-tabs__item {
+    color: #ebebeb;
+  }
+
+  .is-active {
+    color: #409EFF;
+  }
+}
+
+.el-input__inner {
+  height: 32px;
+  line-height: 32px;
+}
+
+.el-button {
+  height: 32px;
+  padding: 0px 20px;
+}
+
 .el-upload {
   input[type="file"] {
     display: none !important;
@@ -46,4 +94,97 @@
 // to fix el-date-picker css style
 .el-range-separator {
   box-sizing: content-box;
+}
+
+
+
+//table 
+.el-table {
+
+  .el-table__fixed-right::before,
+  .el-table__fixed::before {
+    background-color: $tableBg;
+  }
+
+  background-color: $tableBg;
+  border-top: 1px solid rgb(20, 100, 244) !important;
+  border: 1px solid transparent;
+
+  body tr.hover-row>td {
+    background-color: $tableBg;
+  }
+
+  .hover-row {
+    background-color: $tableBg;
+  }
+
+  tr {
+    border: 1px solid rgba(20, 100, 244, 0.191764705882353) !important;
+    ;
+    background-color: transparent;
+    height: 50px;
+
+    &:hover>td {
+      background-color: $tableHoverBg;
+    }
+
+    td {
+      padding: 10px 0;
+      color: white;
+      text-align: center;
+
+      // 悬停颜色 上面的不用管
+      &:hover {
+        background-color: $tableHoverBg;
+      }
+    }
+  }
+
+  .el-table__body tr.hover-row>td {
+    background-color: $tableHoverBg !important
+  }
+
+  .el-tablle--enable-row-hover .el-table__body tr:hover>td {
+    background-color: $tableHoverBg !important
+  }
+
+  th {
+    background-color: $tablethBg;
+    border-bottom: 2px solid transparent;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.729411764705882);
+  }
+
+  td,
+  th.is-leaf {
+    border-bottom: transparent;
+  }
+}
+
+/* 鼠标划过整行的变色的hover */
+.el-table--enable-row-hover .el-table__body tr:hover>td {
+
+  background-color: $tableHoverBg !important;
+  cursor: pointer;
+}
+
+
+.el-table--border::after,
+.el-table--group::after,
+.el-table::before {
+  background-color: transparent;
+}
+
+.el-table__empty-block {
+  width: 100%;
+  min-height: 350px !important;
+  border: transparent !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    color: rgba(255, 255, 255, 0.729411764705882);
+    font-size: 28px;
+  }
 }

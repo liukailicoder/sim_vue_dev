@@ -31,6 +31,7 @@
 
     .el-scrollbar__bar.is-vertical {
       right: 0px;
+     
     }
 
     .el-scrollbar {
@@ -40,6 +41,7 @@
     &.has-logo {
       .el-scrollbar {
         height: calc(100% - 50px);
+        background: #001529;
       }
     }
 
@@ -66,6 +68,8 @@
       border: none;
       height: 100%;
       width: 100% !important;
+      background: #001529!important;
+
     }
 
     // menu hover
@@ -83,7 +87,7 @@
     & .nest-menu .el-submenu>.el-submenu__title,
     & .el-submenu .el-menu-item {
       min-width: $sideBarWidth !important;
-      background-color: $subMenuBg !important;
+      background-color: #001529!important;
 
       &:hover {
         background-color: $subMenuHover !important;
@@ -93,7 +97,8 @@
 
   .hideSidebar {
     .sidebar-container {
-      width: 54px !important;
+      width: 65px !important;
+      background-color: #001529;
     }
 
     .main-container {

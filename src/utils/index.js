@@ -115,3 +115,18 @@ export function param2Obj(url) {
   })
   return obj
 }
+
+/**
+ * 删除对象中为null，为undefined为 ''的值
+ * @author 刘凯丽
+ * @returns {Object}
+ */
+
+export function filterObj(obj) {
+  return Object.entries(obj).reduce((newObj, [key, value]) => {
+    if (value !== null && value !== undefined && value !== '') {
+      newObj[key] = value;
+    }
+    return newObj;
+  }, {});
+}

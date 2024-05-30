@@ -16,6 +16,13 @@ import router from './router'
 import '@/icons' // icon
 import '@/permission' // permission control
 
+// 注册全局组件
+const uiFiles = require.context('@/components/autoRegister', true, /\.vue$/)
+uiFiles.keys().forEach(uiPath => {
+  const uiName = uiPath.replace(/^\.\/(.*)\.\w+$/, '$1')
+  const value = uiFiles(uiPath)
+  Vue.component(uiName, value.default)
+});
 
 // 引入请求框架
 import { requestMounting } from './utils/request/Request'

@@ -1,21 +1,20 @@
 <template>
   <div v-if="!item.hidden">
     <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
-      <!-- {{onlyOneChild.path}} -->
-      <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
-        <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
+      <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path, onlyOneChild.meta.query_string)">
+        <el-menu-item :index="resolvePath(onlyOneChild.path, onlyOneChild.meta.query_string)" :class="{'submenu-title-noDropdown':!isNest}">
           <item :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)" :title="onlyOneChild.meta.title" />
         </el-menu-item>
       </app-link>
     </template>
 
-    <el-submenu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
+    <el-submenu v-else ref="subMenu" :index="resolvePath(item.path, item.meta.query_string)" popper-append-to-body>
       <template slot="title">
         <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title" />
       </template>
       <sidebar-item
         v-for="child in item.children"
-        :key="child.path"
+        :key="getKey(child)"
         :is-nest="true"
         :item="child"
         :base-path="resolvePath(child.path)"
@@ -58,6 +57,12 @@ export default {
     return {}
   },
   methods: {
+    getKey(route) {
+      let meta = route.meta||{};
+      let append = meta.query_string || '';
+      let key = route.path + append;
+      return key;
+    },
     hasOneShowingChild(children = [], parent) {
       const showingChildren = children.filter(item => {
         if (item.hidden) {
@@ -82,14 +87,22 @@ export default {
 
       return false
     },
-    resolvePath(routePath) {
+    resolveQuery(queryString) {
+      // query_string
+      if (queryString) 
+        return `?${queryString}`
+      return '';
+    },
+    resolvePath(routePath, queryString) {
       if (isExternal(routePath)) {
-        return routePath
+        return routePath + this.resolveQuery(queryString);
       }
       if (isExternal(this.basePath)) {
-        return this.basePath
+        return this.basePath;
       }
-      return path.resolve(this.basePath, routePath)
+      // console.log(path.resolve(this.basePath, routePath)  + this.resolveQuery(queryString));
+      let pathStr = path.resolve(this.basePath, routePath)  + this.resolveQuery(queryString);
+      return pathStr;
     }
   }
 }

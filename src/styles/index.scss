@@ -3,10 +3,10 @@
 @import './transition.scss';
 @import './element-ui.scss';
 @import './sidebar.scss';
-@import './datamanage.scss';
 
 body {
   height: 100%;
+  min-width: 1280px;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;

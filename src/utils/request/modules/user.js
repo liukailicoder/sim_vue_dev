@@ -19,4 +19,5 @@ export default { // 这里的this指向会变成Request类
     menu() {
         return this.$get('/api/v1/base/usermenu', );
     },
+    
 };

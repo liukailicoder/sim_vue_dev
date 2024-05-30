@@ -4,7 +4,9 @@ import getters from './getters'
 import app from './modules/app'
 import settings from './modules/settings'
 import user from './modules/user'
-import createPersistedState from 'vuex-persistedstate'  
+import permission from './modules/permission'
+import createPersistedState from 'vuex-persistedstate'
+import roles from "./modules/role.js"
 
 Vue.use(Vuex)
 
@@ -12,7 +14,9 @@ const store = new Vuex.Store({
   modules: {
     app,
     settings,
-    user
+    user,
+    permission,
+    roles
   },
   getters,
   plugins: [  
@@ -20,7 +24,6 @@ const store = new Vuex.Store({
     createPersistedState({  
       reducer: state => ({ // 需要持久化存储的数据
         user: state.user, // 用户
-        permission: state.permission, // 路由
       }),
       storage: {  // 存储方式定义  都存localStorage
         getItem: (key) => localStorage.getItem(key), // 获取  

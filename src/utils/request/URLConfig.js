@@ -24,7 +24,8 @@ export default {
         return config;
     },
     didRequest(response, error = false) {
-        if (response.code == 201) { // TODO: 登录过去 弹出
+        console.log('来这里了吗')
+        if (response.code == 401) { // TODO: 登录过去 弹出
             store.dispatch('user/logout');
             return;
         }

@@ -2,12 +2,12 @@ import { login, logout, getInfo } from '@/api/user'
 // import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 import { request } from '@/utils/request/Request'
-
+import store from '@/store/index'
 
 const getDefaultState = () => {
   return {
     token: '',
-    userinfo: {},
+    userinfo: void 0,
     menu: [],
   }
 }
@@ -20,28 +20,25 @@ const mutations = {
   SET_TOKEN: (state, token) => {
     state.token = token
   },
-  SET_NAME: (state, name) => {
-    state.name = name
+  SET_USERINFO: (state, value) => {
+    state.userinfo = value
   },
-  SET_AVATAR: (state, avatar) => {
-    state.avatar = avatar
-  }
+  SET_MENU: (state, value) => {
+    state.menu = value
+  },
 }
 
 const actions = {
   // user login
-  login({ commit }, userInfo) {
-    const { username, password } = userInfo
+  login({ commit }, params) {
     return new Promise((resolve, reject) => {
       // 处理login 
       // /api/v1/base/access_token
-      request.$api('user').login({ username: username.trim(), password: password }).then(async res => {
+      request.$api('user').login(params).then(async res => {
         // const { data } = response
-        console.log('拿到的返参', res);
         commit('SET_TOKEN', res.data.access_token);
         // 设置token后 去获取关联的用户信息和权限信息
         let userData = await this.dispatch('user/getInfo', res.data.access_token);
-        console.log('拿到的userData');
         if (userData) {
           resolve();
         } else {
@@ -49,7 +46,6 @@ const actions = {
           reject('登录失败')
         }
       }).catch(err => {
-        console.log(err);
         reject(err)
       })
     })
@@ -63,12 +59,10 @@ const actions = {
         request.$api('user').menu(),
       ]
       Promise.all(queue).then(res => {
-        console.log(res);
-        state.userinfo = res[0].data
-        state.menu = res[1].data
+        commit('SET_USERINFO', res[0].data)
+        commit('SET_MENU', res[1].data)
         resolve(res)
       }).catch(error => {
-        console.log(error);
         reject(void 0);
       });
     })
@@ -79,6 +73,9 @@ const actions = {
     return new Promise((resolve, reject) => {
       try {
         resetRouter()
+        // 这里也要清空路由参数
+        console.log(state);
+        store.dispatch('permission/reset');
         commit('RESET_STATE')
         resolve();
       } catch (error) {

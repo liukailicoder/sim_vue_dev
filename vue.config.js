@@ -39,13 +39,13 @@ module.exports = {
     // before: require('./mock/mock-server.js'), // mock不在这里做 目前项目也用不到
     proxy: {  // 服务配置
       '/dev-api': {
-        target: 'http://81.70.40.111:9999/',
+        target: 'http://ss_test.i996.work/',
         changOrigin: true,  //允许跨域
         pathRewrite: {
-          '^/dev-api': ''
+          '^/dev-api': '' 
         }
       },
-
+      
     }
   },
   configureWebpack: {

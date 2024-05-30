@@ -10,7 +10,7 @@ NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 const whiteList = ['/login'] // no redirect whitelist
 
-router.beforeEach(async(to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   // start progress bar
   NProgress.start()
 
@@ -26,17 +26,27 @@ router.beforeEach(async(to, from, next) => {
       next({ path: '/' })
       NProgress.done()
     } else {
-      const hasGetUserInfo = store.getters.name
+
+      // TODO: 这里判断下有没有这个路由, 没有的话 就手动404; 还没做
+      const hasGetUserInfo = store.getters.userinfo
       if (hasGetUserInfo) {
+        // 先看有没有加路由
+        const hasRoles = store.getters.routes && store.getters.routes.length > 0
+        console.log('看看有没有路由', hasRoles, store.getters.routes);
+        if (!hasRoles) {
+          console.log('没路由，新增')
+          await store.dispatch('permission/setRoutes', router);
+          return next({ ...to, replace: true });
+        }
+        console.log('当前路由', store.getters.routes, router);
+        // 每次都更新
+        await store.dispatch('user/getInfo', router).then(e => { });
         next()
       } else {
         try {
           // get user info
-          
-          await store.dispatch('user/getInfo')
           next()
         } catch (error) {
-          console.log('sm cuo', error);
           // remove token and go to login page to re-login
           await store.dispatch('user/resetToken')
           Message.error(error || 'Has Error')
@@ -47,7 +57,6 @@ router.beforeEach(async(to, from, next) => {
     }
   } else {
     /* has no token*/
-
     if (whiteList.indexOf(to.path) !== -1) {
       // in the free login whitelist, go directly
       next()

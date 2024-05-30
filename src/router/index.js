@@ -42,34 +42,79 @@ export const constantRoutes = [
     component: () => import('@/views/404'),
     hidden: true
   },
-
   {
     path: '/',
     component: Layout,
     redirect: '/dashboard',
-    children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
-    },
-    {
-      path: 'datamanage',
-      name: 'Datamanage',
-      component: () => import('@/views/datamanage/index'),
-      meta: { title: 'Datamanage', icon: 'datamanage' }
-    }
-  ]
+    children: [
+      {
+        path: 'dashboard',
+        name: 'Dashboard',
+        component: () => import('@/views/dashboard/index'),
+        meta: { title: '首页', icon: 'dashboard' }
+      }
+    ]
   },
+  {
+    path: '/case',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Case',
+        component: () => import('@/views/case/index'),
+        meta: { title: '案例设置', icon: 'dashboard' }
+      }
+    ]
+  },
+  {
+    path: '/simulation',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Simulation',
+        component: () => import('@/views/running/index'),
+        meta: { title: '仿真运行', icon: 'dashboard' }
+      }
+    ]
+  },
+  {
+    path: '/detail',
+    component: Layout,
+    children: [
+      {
+        path: 'detail',
+        name: 'Detail',
+        component: () => import('@/views/running/detail.vue'),
+        meta: { title: '仿真详情', icon: 'dashboard' }
+      }
+    ]
+  },
+  {
+    path: '/elements',
+    component: Layout,
+    children: [
+      {
+        path: 'elements',
+        name: 'Elements',
+        component: () => import('@/views/elements/index.vue'),
+        meta: { title: '图元编辑', icon: 'dashboard' }
+      }
+    ]
+  },
+
+
   // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  // { path: '*', redirect: '/404', hidden: true }
 ]
 
-const createRouter = () => new Router({
-  // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
-})
+const createRouter = () =>
+  new Router({
+    // mode: 'history', // require service support
+    scrollBehavior: () => ({ y: 0 }),
+    routes: constantRoutes
+  })
 
 const router = createRouter()
 
